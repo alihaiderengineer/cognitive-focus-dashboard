@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cognitive Focus Dashboard - PKT</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #1a1e2d;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #3b4261;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #565f89;
+      }
+
+      body {
+        background-color: #24283b;
+        color: #c0caf5;
+        font-family: "JetBrains Mono", monospace, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        min-height: 100vh;
+        padding: 2rem 0;
+        text-align: center;
+      }
+
+      .container {
+        max-width: 700px;
+        width: 95%;
+        padding: 2rem;
+        background-color: #1f2335;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        border: 1px solid #292e42;
+      }
+
+      h1 {
+        color: #7aa2f7;
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+
+      #current-time {
+        font-size: 3.5rem;
+        font-weight: bold;
+        color: #e0af68;
+        margin-bottom: 0.5rem;
+      }
+
+      .pkt-label {
+        font-size: 1.2rem;
+        color: #565f89;
+        margin-bottom: 2rem;
+        display: block;
+      }
+
+      .task-box {
+        background-color: #292e42;
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+        border-left: 5px solid #9ece6a;
+        transition: all 0.3s ease;
+      }
+
+      .task-box.namaz-active {
+        border-left: 5px solid #7dcfff;
+        background-color: #1a1e2d;
+        box-shadow: 0 0 15px rgba(125, 207, 255, 0.2);
+      }
+
+      #current-task {
+        font-size: 1.4rem;
+        font-weight: bold;
+        color: #9ece6a;
+      }
+      .namaz-active #current-task {
+        color: #7dcfff;
+      }
+      #next-task {
+        font-size: 1rem;
+        color: #565f89;
+        margin-top: 0.5rem;
+      }
+
+      .timetable-section {
+        margin-top: 2rem;
+        background-color: #1a1e2d;
+        border-radius: 8px;
+        padding: 1rem;
+        border: 1px solid #3b4261;
+        text-align: left;
+      }
+
+      .timetable-section h2 {
+        font-size: 1.2rem;
+        color: #bb9af7;
+        margin-bottom: 1rem;
+        text-align: center;
+        border-bottom: 1px solid #3b4261;
+        padding-bottom: 0.5rem;
+      }
+
+      /* Prayer Cards Style */
+      #prayer-times-list {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 1.5rem;
+        border-bottom: 1px solid #3b4261;
+        padding-bottom: 1.5rem;
+      }
+
+      .prayer-card {
+        background-color: #24283b;
+        padding: 8px 12px;
+        border-radius: 6px;
+        border-left: 3px solid #7dcfff;
+        font-size: 0.9rem;
+        color: #a9b1d6;
+      }
+      .prayer-card strong {
+        color: #7dcfff;
+      }
+
+      .timeline-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.8rem;
+        border-bottom: 1px solid #292e42;
+        color: #a9b1d6;
+        font-size: 0.95rem;
+        border-radius: 4px;
+        transition: background 0.3s ease;
+      }
+      .timeline-item:last-child {
+        border-bottom: none;
+      }
+      .timeline-item.active-task {
+        background-color: #292e42;
+        border-left: 4px solid #9ece6a;
+        color: #ffffff;
+        font-weight: bold;
+      }
+      .time-range {
+        color: #7dcfff;
+        min-width: 160px;
+        font-weight: bold;
+      }
+
+      button {
+        border: none;
+        padding: 12px 24px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        border-radius: 6px;
+        cursor: pointer;
+        transition:
+          transform 0.2s,
+          background-color 0.2s;
+        width: 100%;
+      }
+      #panic-btn {
+        background-color: #f7768e;
+        color: #15161e;
+        margin-bottom: 1rem;
+      }
+      #panic-btn:hover {
+        background-color: #db4b4b;
+        transform: scale(1.02);
+      }
+      #toggle-settings-btn {
+        background-color: #3b4261;
+        color: #c0caf5;
+        font-size: 0.9rem;
+        padding: 8px;
+      }
+      #toggle-settings-btn:hover {
+        background-color: #565f89;
+      }
+
+      #settings-panel {
+        display: none;
+        margin-top: 1.5rem;
+        padding: 1.5rem;
+        background-color: #1a1e2d;
+        border-radius: 8px;
+        border: 1px solid #3b4261;
+        text-align: left;
+      }
+      .setting-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+      .setting-row label {
+        color: #7dcfff;
+        font-weight: bold;
+      }
+      .setting-row input[type="time"] {
+        background-color: #24283b;
+        color: #c0caf5;
+        border: 1px solid #565f89;
+        padding: 5px;
+        border-radius: 4px;
+        font-family: inherit;
+      }
+
+      #save-settings-btn {
+        background-color: #7dcfff;
+        color: #15161e;
+        margin-top: 1rem;
+        padding: 8px;
+        font-size: 1rem;
+      }
+      #save-settings-btn:hover {
+        background-color: #6fb5ff;
+      }
+
+      #timer-display {
+        display: none;
+        margin-top: 1rem;
+        font-size: 1.2rem;
+        color: #ff9e64;
+        margin-bottom: 1rem;
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Current Focus</h1>
+      <div id="current-time">00:00</div>
+      <span class="pkt-label">Pakistan Standard Time (PKT)</span>
+
+      <div id="task-container" class="task-box">
+        <div id="current-task">Loading task...</div>
+        <div id="next-task"></div>
+      </div>
+
+      <button id="panic-btn">I'm distracted / Urge to Scroll</button>
+      <div id="timer-display">
+        Breathe... Wait <span id="countdown">15:00</span> before deciding.
+      </div>
+
+      <button id="toggle-settings-btn">⚙️ Adjust Namaz Timings</button>
+
+      <div id="settings-panel">
+        <div class="setting-row">
+          <label>Fajr</label><input type="time" id="time-fajr" value="05:00" />
+        </div>
+        <div class="setting-row">
+          <label>Zuhr</label><input type="time" id="time-zuhr" value="13:30" />
+        </div>
+        <div class="setting-row">
+          <label>Asr</label><input type="time" id="time-asr" value="16:30" />
+        </div>
+        <div class="setting-row">
+          <label>Maghrib</label
+          ><input type="time" id="time-maghrib" value="18:15" />
+        </div>
+        <div class="setting-row">
+          <label>Isha</label><input type="time" id="time-isha" value="19:45" />
+        </div>
+        <button id="save-settings-btn">Save Timings</button>
+      </div>
+
+      <div class="timetable-section">
+        <h2>🕌 Active Prayer Timings</h2>
+        <div id="prayer-times-list">
+          <!-- Javascript will inject prayer cards here -->
+        </div>
+
+        <h2>📅 Daily Schedule View</h2>
+        <div id="full-timetable-list">
+          <!-- Javascript will inject list here -->
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Updated Schedule (Lunch shifted to 1 PM - 2 PM)
+      const schedule = [
+        { id: 1, start: 0, end: 6, task: "Sleep (Neuroplasticity phase)" },
+        { id: 2, start: 6, end: 7, task: "Wake up, Exercise, Breakfast" },
+        { id: 3, start: 7, end: 9.5, task: "Frontend Masters (HTML/CSS/JS)" },
+        { id: 4, start: 9.5, end: 10.5, task: "Maths Practice (No Screens)" },
+        {
+          id: 5,
+          start: 10.5,
+          end: 13,
+          task: "Virtual University (BBIT) Classes",
+        }, // 10:30 AM to 1:00 PM
+        { id: 6, start: 13, end: 14, task: "Lunch & Screen-Free Rest" }, // 1:00 PM to 2:00 PM
+        { id: 7, start: 14, end: 17, task: "BBIT Revision / Pending Tasks" }, // 2:00 PM to 5:00 PM
+        {
+          id: 8,
+          start: 17,
+          end: 18.5,
+          task: "Outdoor Walk / Natural Dopamine",
+        },
+        {
+          id: 9,
+          start: 18.5,
+          end: 20,
+          task: "Coding Practice / Build Projects",
+        },
+        { id: 10, start: 20, end: 21, task: "Dinner & Relax" },
+        { id: 11, start: 21, end: 22, task: "Book Reading (Off Screens)" },
+        { id: 12, start: 22, end: 24, task: "Sleep (Neuroplasticity phase)" },
+      ];
+
+      const prayers = ["fajr", "zuhr", "asr", "maghrib", "isha"];
+
+      prayers.forEach((prayer) => {
+        const savedTime = localStorage.getItem(`namaz-${prayer}`);
+        if (savedTime)
+          document.getElementById(`time-${prayer}`).value = savedTime;
+      });
+
+      function timeToDecimal(timeString) {
+        const [hours, minutes] = timeString.split(":").map(Number);
+        return hours + minutes / 60;
+      }
+
+      function formatFriendlyTime(decimalTime) {
+        if (decimalTime === 24 || decimalTime === 0) return "12:00 AM";
+        let h = Math.floor(decimalTime);
+        let m = Math.round((decimalTime - h) * 60);
+        let ampm = h >= 12 ? "PM" : "AM";
+        let displayH = h % 12 || 12;
+        let displayM = m.toString().padStart(2, "0");
+        return `${displayH.toString().padStart(2, "0")}:${displayM} ${ampm}`;
+      }
+
+      function updateDashboard() {
+        const now = new Date();
+        document.getElementById("current-time").innerText =
+          now.toLocaleTimeString("en-US", {
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true,
+          });
+
+        const hours = now.getHours();
+        const minutes = now.getMinutes();
+        const currentTimeDecimal = hours + minutes / 60;
+
+        let currentTaskName = "Free Time";
+        let nextTaskName = "";
+        let isNamazTime = false;
+        let currentTaskId = null;
+
+        // 1. Regular Schedule
+        for (let i = 0; i < schedule.length; i++) {
+          if (
+            currentTimeDecimal >= schedule[i].start &&
+            currentTimeDecimal < schedule[i].end
+          ) {
+            currentTaskName = schedule[i].task;
+            currentTaskId = schedule[i].id;
+            nextTaskName = schedule[i + 1]
+              ? "Next: " + schedule[i + 1].task
+              : "Next: Cycle repeats";
+            break;
+          }
+        }
+
+        // 2. Namaz Overrides
+        for (let prayer of prayers) {
+          let timeString = document.getElementById(`time-${prayer}`).value;
+          let nTime = timeToDecimal(timeString);
+
+          if (
+            currentTimeDecimal >= nTime &&
+            currentTimeDecimal < nTime + 0.25
+          ) {
+            nextTaskName = `Back to: ${currentTaskName}`;
+            currentTaskName = `🕌 ${prayer.charAt(0).toUpperCase() + prayer.slice(1)} Prayer (Mindfulness & Reset)`;
+            isNamazTime = true;
+            break;
+          }
+        }
+
+        const taskContainer = document.getElementById("task-container");
+        if (isNamazTime) {
+          taskContainer.classList.add("namaz-active");
+        } else {
+          taskContainer.classList.remove("namaz-active");
+        }
+
+        document.getElementById("current-task").innerText = currentTaskName;
+        document.getElementById("next-task").innerText = nextTaskName;
+
+        // 3. Render Prayer Timings Cards
+        const prayerContainer = document.getElementById("prayer-times-list");
+        prayerContainer.innerHTML = "";
+        prayers.forEach((prayer) => {
+          let timeString = document.getElementById(`time-${prayer}`).value;
+          let decimalTime = timeToDecimal(timeString);
+          let pName = prayer.charAt(0).toUpperCase() + prayer.slice(1);
+          prayerContainer.innerHTML += `<div class="prayer-card"><strong>${pName}</strong>: ${formatFriendlyTime(decimalTime)}</div>`;
+        });
+
+        // 4. Render Daily Schedule
+        const listContainer = document.getElementById("full-timetable-list");
+        listContainer.innerHTML = "";
+
+        schedule.forEach((item) => {
+          const isCurrent = item.id === currentTaskId ? "active-task" : "";
+          const itemHTML = `
+                    <div class="timeline-item ${isCurrent}">
+                        <span class="time-range">${formatFriendlyTime(item.start)} - ${formatFriendlyTime(item.end)}</span>
+                        <span class="task-desc">${item.task}</span>
+                    </div>
+                `;
+          listContainer.innerHTML += itemHTML;
+        });
+      }
+
+      // Toggles & Interactivity
+      document
+        .getElementById("toggle-settings-btn")
+        .addEventListener("click", () => {
+          const panel = document.getElementById("settings-panel");
+          panel.style.display =
+            panel.style.display === "none" || panel.style.display === ""
+              ? "block"
+              : "none";
+        });
+
+      document
+        .getElementById("save-settings-btn")
+        .addEventListener("click", () => {
+          prayers.forEach((prayer) => {
+            localStorage.setItem(
+              `namaz-${prayer}`,
+              document.getElementById(`time-${prayer}`).value,
+            );
+          });
+          const btn = document.getElementById("save-settings-btn");
+          btn.innerText = "Saved Successfully!";
+          btn.style.backgroundColor = "#9ece6a";
+          btn.style.color = "#15161e";
+          updateDashboard();
+          setTimeout(() => {
+            btn.innerText = "Save Timings";
+            btn.style.backgroundColor = "#7dcfff";
+            document.getElementById("settings-panel").style.display = "none";
+          }, 1500);
+        });
+
+      // Urge Surfing logic
+      let timerInterval;
+      document.getElementById("panic-btn").addEventListener("click", () => {
+        const timerDisplay = document.getElementById("timer-display");
+        const countdownSpan = document.getElementById("countdown");
+        const btn = document.getElementById("panic-btn");
+
+        if (timerDisplay.style.display === "block") return;
+
+        btn.style.display = "none";
+        timerDisplay.style.display = "block";
+        let timeLeft = 15 * 60;
+
+        timerInterval = setInterval(() => {
+          const m = Math.floor(timeLeft / 60);
+          const s = timeLeft % 60;
+          countdownSpan.innerText = `${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
+          if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            timerDisplay.style.display = "none";
+            btn.style.display = "block";
+            btn.innerText = "Urge defeated! Back to focus.";
+            setTimeout(
+              () => (btn.innerText = "I'm distracted / Urge to Scroll"),
+              5000,
+            );
+          }
+          timeLeft--;
+        }, 1000);
+      });
+
+      updateDashboard();
+      setInterval(updateDashboard, 60000);
+    </script>
+  </body>
+</html>
