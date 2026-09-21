@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Material Focus Dashboard</title>
+    <title>Material Focus Dashboard (Dynamic Shift)</title>
 
     <!-- Material Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -23,23 +23,18 @@
         --md-bg: #121212;
         --md-surface: #1e1e1e;
         --md-surface-2: #272727;
-        --md-primary: #90caf9; /* Light Blue */
-        --md-primary-variant: #42a5f5;
-        --md-secondary: #81c784; /* Light Green for Breaks */
-        --md-error: #ef5350; /* Red for Panic */
-        --md-namaz: #ce93d8; /* Purple for Namaz */
+        --md-primary: #90caf9;
+        --md-secondary: #81c784;
+        --md-error: #ef5350;
+        --md-namaz: #ce93d8;
+        --md-warning: #ffb74d;
 
         --text-high: rgba(255, 255, 255, 0.87);
         --text-med: rgba(255, 255, 255, 0.6);
-        --text-disabled: rgba(255, 255, 255, 0.38);
 
         --elevation-1:
           0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14),
           0 1px 3px 0 rgba(0, 0, 0, 0.12);
-        --elevation-4:
-          0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14),
-          0 1px 10px 0 rgba(0, 0, 0, 0.12);
-
         --radius: 8px;
       }
 
@@ -73,7 +68,6 @@
         }
       }
 
-      /* MATERIAL CARDS */
       .md-card {
         background-color: var(--md-surface);
         border-radius: var(--radius);
@@ -84,7 +78,6 @@
         flex-direction: column;
       }
 
-      /* TOP BAR */
       .app-bar {
         grid-column: 1 / -1;
         display: flex;
@@ -111,8 +104,10 @@
         align-items: center;
         gap: 4px;
       }
+      .chip.warning {
+        color: var(--md-warning);
+      }
 
-      /* TYPOGRAPHY */
       .overline {
         font-size: 0.75rem;
         font-weight: 500;
@@ -124,23 +119,17 @@
       .h4 {
         font-size: 2.125rem;
         font-weight: 400;
-        letter-spacing: 0.25px;
         margin-bottom: 8px;
       }
       .subtitle1 {
         font-size: 1rem;
-        font-weight: 400;
-        letter-spacing: 0.15px;
         color: var(--text-med);
       }
       .body2 {
         font-size: 0.875rem;
-        font-weight: 400;
-        letter-spacing: 0.25px;
         color: var(--text-med);
       }
 
-      /* PROGRESS BARS */
       .md-progress-bg {
         background: var(--md-surface-2);
         height: 8px;
@@ -154,7 +143,6 @@
         height: 100%;
         width: 0%;
         transition: width 1s linear;
-        border-radius: 4px;
       }
       .progress-labels {
         display: flex;
@@ -163,7 +151,41 @@
         color: var(--text-med);
       }
 
-      /* CYCLE TRACKER (50/10) */
+      /* ITINERARY LIST STYLES */
+      .iti-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 12px;
+        border-radius: 4px;
+        background: var(--md-surface-2);
+        font-size: 0.875rem;
+        border-left: 3px solid var(--md-primary);
+        margin-bottom: 8px;
+        transition:
+          background 0.3s,
+          border-width 0.3s;
+      }
+      .iti-item.active {
+        background: rgba(144, 202, 249, 0.15);
+        border-width: 4px;
+      }
+      .iti-item.break {
+        border-left-color: var(--md-secondary);
+      }
+      .iti-item.break.active {
+        background: rgba(129, 199, 132, 0.15);
+      }
+      .iti-item.namaz {
+        border-left-color: var(--md-namaz);
+      }
+      .iti-item.namaz.active {
+        background: rgba(206, 147, 216, 0.15);
+      }
+      .iti-time {
+        color: var(--text-med);
+        font-family: monospace;
+      }
+
       .cycle-card {
         border-left: 4px solid var(--md-primary);
       }
@@ -173,7 +195,6 @@
       .cycle-card.break-mode .md-progress-fill {
         background: var(--md-secondary);
       }
-
       .cycle-timer {
         font-size: 3rem;
         font-weight: 300;
@@ -188,71 +209,48 @@
         color: var(--md-secondary);
       }
 
-      /* NAMAZ ALERT */
-      .alert-box {
-        background: rgba(206, 147, 216, 0.1);
-        border: 1px solid var(--md-namaz);
-        border-radius: var(--radius);
-        padding: 12px 16px;
-        margin-top: 16px;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        display: none; /* Hidden by default */
-      }
-      .alert-box .material-icons-round {
-        color: var(--md-namaz);
-      }
-      .alert-text {
-        color: var(--md-namaz);
-        font-size: 0.875rem;
-        font-weight: 500;
-      }
-
-      /* BUTTONS */
       .md-btn {
         background: var(--md-surface-2);
-        color: var(--md-primary);
+        color: var(--text-high);
         border: none;
+        padding: 10px;
         border-radius: 4px;
-        padding: 10px 16px;
-        font-size: 0.875rem;
-        font-weight: 500;
-        text-transform: uppercase;
-        letter-spacing: 1.25px;
         cursor: pointer;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 8px;
-        transition:
-          background 0.2s,
-          box-shadow 0.2s;
+        width: 100%;
+        font-weight: 500;
+        transition: background 0.2s;
       }
       .md-btn:hover {
-        background: rgba(144, 202, 249, 0.08);
+        background: rgba(255, 255, 255, 0.1);
       }
 
       .md-btn-contained.error {
         background: var(--md-error);
         color: #fff;
-        box-shadow: var(--elevation-1);
-        width: 100%;
+        border: none;
         padding: 14px;
+        border-radius: 4px;
+        font-weight: 500;
+        cursor: pointer;
+        text-transform: uppercase;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
       }
-      .md-btn-contained.error:hover {
-        background: #e53935;
-        box-shadow: var(--elevation-4);
-      }
-
       .md-btn-contained.primary {
         background: var(--md-primary);
         color: #000;
-        width: 100%;
+        border: none;
+        padding: 10px;
+        border-radius: 4px;
+        cursor: pointer;
         margin-top: 16px;
+        width: 100%;
+        font-weight: 500;
       }
 
-      /* TIMELINE */
       .timeline {
         display: flex;
         flex-direction: column;
@@ -264,14 +262,10 @@
       .timeline::-webkit-scrollbar {
         width: 6px;
       }
-      .timeline::-webkit-scrollbar-track {
-        background: transparent;
-      }
       .timeline::-webkit-scrollbar-thumb {
         background: var(--md-surface-2);
         border-radius: 3px;
       }
-
       .tl-item {
         display: flex;
         gap: 16px;
@@ -314,13 +308,6 @@
         box-shadow: 0 0 8px var(--md-primary);
       }
 
-      .tl-title {
-        font-size: 1rem;
-        font-weight: 500;
-        color: var(--text-high);
-      }
-
-      /* SETTINGS INPUTS */
       .input-group {
         display: flex;
         justify-content: space-between;
@@ -338,12 +325,7 @@
         padding: 8px;
         border-radius: 4px;
         font-family: inherit;
-        font-size: 0.875rem;
         outline: none;
-        border-bottom: 2px solid transparent;
-      }
-      .input-group input:focus {
-        border-bottom-color: var(--md-primary);
       }
     </style>
   </head>
@@ -357,17 +339,25 @@
           >
           Cognitive Dashboard
         </div>
-        <div class="chip" id="day-badge">
-          <span class="material-icons-round" style="font-size: 16px"
-            >today</span
-          >
-          LOADING MODE...
+        <div style="display: flex; gap: 8px">
+          <div class="chip" id="shift-badge" style="display: none">
+            <span class="material-icons-round" style="font-size: 16px"
+              >update</span
+            >
+            SHIFTED
+          </div>
+          <div class="chip" id="day-badge">
+            <span class="material-icons-round" style="font-size: 16px"
+              >today</span
+            >
+            LOADING...
+          </div>
         </div>
       </div>
 
       <!-- LEFT COLUMN -->
       <div class="left-panel">
-        <!-- CURRENT SESSION (MAIN OVERVIEW) -->
+        <!-- CURRENT SESSION OVERVIEW -->
         <div class="md-card">
           <div class="overline">Current Session Overview</div>
           <div class="h4" id="task-title">Loading Module...</div>
@@ -388,36 +378,34 @@
             <span id="task-remain">0h 0m left</span>
           </div>
 
-          <!-- NAMAZ ANTICIPATION ALERT -->
-          <div class="alert-box" id="namaz-alert">
-            <span class="material-icons-round">mosque</span>
-            <div class="alert-text" id="namaz-alert-text">
-              Namaz Event coming up in this session
+          <!-- SESSION ITINERARY -->
+          <div id="itinerary-section" style="display: none; margin-top: 24px">
+            <div class="overline" style="color: var(--md-primary)">
+              Session Itinerary (50/10 Breakdown)
             </div>
+            <div id="session-itinerary" style="margin-top: 12px"></div>
           </div>
         </div>
 
-        <!-- 50/10 CYCLE TRACKER -->
+        <!-- 50/10 LIVE CYCLE TRACKER -->
         <div class="md-card cycle-card" id="cycle-card">
-          <div class="overline">Current Micro-Cycle (50/10 Rule)</div>
+          <div class="overline">Current Micro-Cycle Timer</div>
           <div class="cycle-status" id="cycle-status">Deep Focus</div>
           <div class="cycle-timer" id="cycle-timer">00:00</div>
           <div class="body2" id="cycle-desc">
             Focus strictly on the task. No distractions.
           </div>
-
           <div class="md-progress-bg" style="height: 4px; margin-top: 16px">
             <div class="md-progress-fill" id="cycle-progress"></div>
           </div>
         </div>
 
         <!-- PANIC / URGE BUTTON -->
-        <button class="md-btn md-btn-contained error" id="panic-btn">
+        <button class="md-btn-contained error" id="panic-btn">
           <span class="material-icons-round">warning</span> Dopamine Urge /
           Distracted
         </button>
 
-        <!-- PANIC TIMER -->
         <div
           class="md-card"
           id="panic-display"
@@ -444,12 +432,38 @@
 
       <!-- RIGHT COLUMN -->
       <div class="right-panel">
+        <!-- SCHEDULE ADJUSTMENT (NEW) -->
+        <div class="md-card" style="border: 1px solid var(--md-surface-2)">
+          <div
+            class="overline"
+            style="color: var(--md-warning); margin-bottom: 8px"
+          >
+            Dynamic Adjustment
+          </div>
+          <div class="body2" style="margin-bottom: 16px">
+            Woke up late? Enter your wake up time to shift the entire schedule
+            forward (Namaz times remain fixed).
+          </div>
+          <div class="input-group">
+            <label>Actual Wake Time</label>
+            <input type="time" id="time-wakeup" />
+          </div>
+          <button
+            class="md-btn-contained primary"
+            id="apply-shift-btn"
+            style="background: var(--md-warning); margin-top: 0"
+          >
+            Apply Shift
+          </button>
+          <button class="md-btn" id="reset-shift-btn" style="margin-top: 8px">
+            Reset to Normal (6:00 AM)
+          </button>
+        </div>
+
         <!-- TIMELINE -->
         <div class="md-card" style="flex-grow: 1">
           <div class="overline" style="margin-bottom: 16px">Daily Sequence</div>
-          <div class="timeline" id="timeline-container">
-            <!-- JS Injected Timeline -->
-          </div>
+          <div class="timeline" id="timeline-container"></div>
         </div>
 
         <!-- SETTINGS -->
@@ -457,7 +471,6 @@
           <div class="overline" style="margin-bottom: 16px">
             Namaz Overrides
           </div>
-
           <div class="input-group">
             <label>Fajr</label
             ><input type="time" id="time-fajr" value="05:00" />
@@ -477,8 +490,7 @@
             <label>Isha</label
             ><input type="time" id="time-isha" value="19:45" />
           </div>
-
-          <button class="md-btn md-btn-contained primary" id="save-btn">
+          <button class="md-btn-contained primary" id="save-btn">
             Save Configurations
           </button>
         </div>
@@ -486,7 +498,6 @@
     </div>
 
     <script>
-      // 5+1+1 Protocol Schedules
       const weekdaySchedule = [
         { start: 0, end: 6, task: "Sleep Phase" },
         { start: 6, end: 7, task: "Wake, Exercise, Breakfast" },
@@ -534,25 +545,42 @@
 
       const prayers = ["fajr", "zuhr", "asr", "maghrib", "isha"];
 
-      // Init Config
+      // Setup Namaz
       prayers.forEach((p) => {
         const saved = localStorage.getItem(`namaz-${p}`);
         if (saved) document.getElementById(`time-${p}`).value = saved;
       });
 
-      // Time Utils
+      // Shift System State
+      let scheduleOffset = 0;
+      const todayStr = new Date().toDateString();
+      const savedWake = localStorage.getItem("wake-time");
+      const savedDate = localStorage.getItem("wake-date");
+
+      if (savedWake && savedDate === todayStr) {
+        document.getElementById("time-wakeup").value = savedWake;
+        scheduleOffset = Math.max(0, timeToDecimal(savedWake) - 6);
+      } else {
+        localStorage.removeItem("wake-time");
+      }
+
       function timeToDecimal(t) {
         const [h, m] = t.split(":").map(Number);
         return h + m / 60;
       }
 
       function formatTime(dec) {
-        if (dec === 24 || dec === 0) return "12:00 AM";
         let h = Math.floor(dec);
         let m = Math.round((dec - h) * 60);
-        let ampm = h >= 12 ? "PM" : "AM";
-        let dH = h % 12 || 12;
-        return `${dH.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")} ${ampm}`;
+        if (m === 60) {
+          h++;
+          m = 0;
+        }
+        let displayH = h % 24;
+        if (displayH === 0 && m === 0) return "12:00 AM";
+        let ampm = displayH >= 12 ? "PM" : "AM";
+        let finalH = displayH % 12 || 12;
+        return `${finalH.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")} ${ampm}`;
       }
 
       function formatDur(decHours) {
@@ -565,106 +593,183 @@
       function runEngine() {
         const now = new Date();
         const day = now.getDay();
-
-        let sched = weekdaySchedule;
-        let mode = "FOCUS MODE (MON-FRI)";
+        let baseSched = weekdaySchedule;
+        let mode = "FOCUS MODE";
 
         if (day === 0) {
-          sched = sundaySchedule;
+          baseSched = sundaySchedule;
           mode = "RECOVERY MODE (SUN)";
         } else if (day === 6) {
-          sched = saturdaySchedule;
+          baseSched = saturdaySchedule;
           mode = "CREATOR MODE (SAT)";
         }
 
         document.getElementById("day-badge").innerHTML =
           `<span class="material-icons-round" style="font-size:16px;">today</span> ${mode}`;
 
-        const currDec =
-          now.getHours() + now.getMinutes() / 60 + now.getSeconds() / 3600;
+        const shiftBadge = document.getElementById("shift-badge");
+        if (scheduleOffset > 0) {
+          shiftBadge.style.display = "flex";
+          shiftBadge.classList.add("warning");
+        } else {
+          shiftBadge.style.display = "none";
+        }
 
-        let activeTask = null;
+        // Apply dynamic shift to schedule
+        let sched = baseSched.map((t) => ({
+          ...t,
+          start: t.start + scheduleOffset,
+          end: t.end + scheduleOffset,
+        }));
+
+        let currDec =
+          now.getHours() + now.getMinutes() / 60 + now.getSeconds() / 3600;
+        let effectiveDec = currDec;
+        let baseTask = null;
         let isNamaz = false;
         let nName = "";
 
+        // Find current shifted task (Handles tasks pushed past midnight)
         sched.forEach((t) => {
-          if (currDec >= t.start && currDec < t.end) activeTask = t;
+          if (currDec >= t.start && currDec < t.end) {
+            baseTask = t;
+          } else if (currDec + 24 >= t.start && currDec + 24 < t.end) {
+            baseTask = t;
+            effectiveDec = currDec + 24; // Align progress calculations for next day overlap
+          }
         });
 
-        let upcomingNamaz = null;
-
+        // Check if currently inside an absolute Namaz window (Namaz NEVER shifts)
         prayers.forEach((p) => {
           let nTime = timeToDecimal(document.getElementById(`time-${p}`).value);
-          // Is it active Namaz time? (15 min window)
           if (currDec >= nTime && currDec < nTime + 0.25) {
             isNamaz = true;
             nName = p.toUpperCase();
           }
-          // Anticipate Namaz if it falls within the CURRENT active task
-          if (
-            activeTask &&
-            nTime >= activeTask.start &&
-            nTime < activeTask.end &&
-            nTime > currDec
-          ) {
-            upcomingNamaz = {
-              name: p.charAt(0).toUpperCase() + p.slice(1),
-              time: nTime,
-            };
-          }
         });
 
-        // Update UI Elements
         const tTitle = document.getElementById("task-title");
         const tTimeRange = document.getElementById("task-time-range");
         const tProg = document.getElementById("task-progress");
-        const alertBox = document.getElementById("namaz-alert");
-        const alertText = document.getElementById("namaz-alert-text");
         const cycleCard = document.getElementById("cycle-card");
 
+        // RENDER MICRO-SCHEDULE ITINERARY
+        if (baseTask) {
+          document.getElementById("itinerary-section").style.display = "block";
+          const itiContainer = document.getElementById("session-itinerary");
+          let subEvents = [];
+          let t = baseTask.start;
+          let blockIdx = 1;
+
+          while (t < baseTask.end) {
+            let focusEnd = Math.min(t + 50 / 60, baseTask.end);
+            subEvents.push({
+              type: "focus",
+              start: t,
+              end: focusEnd,
+              title: `🧠 Focus Block ${blockIdx}`,
+            });
+            if (focusEnd < baseTask.end) {
+              let breakEnd = Math.min(focusEnd + 10 / 60, baseTask.end);
+              subEvents.push({
+                type: "break",
+                start: focusEnd,
+                end: breakEnd,
+                title: `☕ Brain Break ${blockIdx}`,
+              });
+              t = breakEnd;
+              blockIdx++;
+            } else {
+              t = focusEnd;
+            }
+          }
+
+          // Inject Absolute Namaz Events into shifted timeline
+          prayers.forEach((p) => {
+            let nTime = timeToDecimal(
+              document.getElementById(`time-${p}`).value,
+            );
+            // Check if namaz falls within the shifted task window (handles past midnight logic too)
+            let adjustedNTime = nTime;
+            if (nTime < 12 && baseTask.start > 12 && effectiveDec > 24)
+              adjustedNTime += 24;
+
+            if (
+              adjustedNTime >= baseTask.start &&
+              adjustedNTime < baseTask.end
+            ) {
+              subEvents.push({
+                type: "namaz",
+                start: adjustedNTime,
+                end: adjustedNTime + 0.25,
+                title: `🕌 ${p.toUpperCase()} PRAYER (Interruption)`,
+              });
+            }
+          });
+
+          subEvents.sort((a, b) => a.start - b.start);
+          itiContainer.innerHTML = "";
+
+          subEvents.forEach((ev) => {
+            let isActive = false;
+            if (
+              isNamaz &&
+              ev.type === "namaz" &&
+              effectiveDec >= ev.start &&
+              effectiveDec < ev.end
+            )
+              isActive = true;
+            else if (
+              !isNamaz &&
+              ev.type !== "namaz" &&
+              effectiveDec >= ev.start &&
+              effectiveDec < ev.end
+            )
+              isActive = true;
+
+            let cStr = "iti-item";
+            if (ev.type === "break") cStr += " break";
+            if (ev.type === "namaz") cStr += " namaz";
+            if (isActive) cStr += " active";
+
+            itiContainer.innerHTML += `
+                    <div class="${cStr}">
+                        <span style="font-weight: 500;">${ev.title}</span>
+                        <span class="iti-time">${formatTime(ev.start)} - ${formatTime(ev.end)}</span>
+                    </div>
+                `;
+          });
+        } else {
+          document.getElementById("itinerary-section").style.display = "none";
+        }
+
+        // UPDATE HERO CARD
         if (isNamaz) {
-          // Namaz Overriding everything
           tTitle.innerText = `${nName} PRAYER (Mindfulness Reset)`;
           tTimeRange.innerHTML = `<span class="material-icons-round" style="font-size: 16px; vertical-align: middle;">schedule</span> Session: ${formatTime(currDec - (currDec % 0.25))} - ${formatTime(currDec - (currDec % 0.25) + 0.25)}`;
-
           let nTime = timeToDecimal(
             document.getElementById(`time-${nName.toLowerCase()}`).value,
           );
           let elap = currDec - nTime;
           tProg.style.width = `${Math.max(0, Math.min(100, (elap / 0.25) * 100))}%`;
           tProg.style.background = "var(--md-namaz)";
-
           document.getElementById("task-elapsed").innerText =
             formatDur(elap) + " elapsed";
           document.getElementById("task-remain").innerText =
             formatDur(0.25 - elap) + " left";
-
-          alertBox.style.display = "none";
-          cycleCard.style.display = "none"; // Hide cycle during namaz
-        } else if (activeTask) {
-          // Normal Task
-          tTitle.innerText = activeTask.task;
-          tTimeRange.innerHTML = `<span class="material-icons-round" style="font-size: 16px; vertical-align: middle;">schedule</span> Session: ${formatTime(activeTask.start)} - ${formatTime(activeTask.end)}`;
-
-          let dur = activeTask.end - activeTask.start;
-          let elap = currDec - activeTask.start;
+          cycleCard.style.display = "none";
+        } else if (baseTask) {
+          tTitle.innerText = baseTask.task;
+          tTimeRange.innerHTML = `<span class="material-icons-round" style="font-size: 16px; vertical-align: middle;">schedule</span> Session: ${formatTime(baseTask.start)} - ${formatTime(baseTask.end)}`;
+          let dur = baseTask.end - baseTask.start;
+          let elap = effectiveDec - baseTask.start;
           tProg.style.width = `${Math.max(0, Math.min(100, (elap / dur) * 100))}%`;
           tProg.style.background = "var(--md-primary)";
-
           document.getElementById("task-elapsed").innerText =
             formatDur(elap) + " elapsed";
           document.getElementById("task-remain").innerText =
-            formatDur(activeTask.end - currDec) + " left";
+            formatDur(baseTask.end - effectiveDec) + " left";
 
-          // Show Namaz Anticipation Radar
-          if (upcomingNamaz) {
-            alertBox.style.display = "flex";
-            alertText.innerText = `Upcoming Event: ${upcomingNamaz.name} Prayer at ${formatTime(upcomingNamaz.time)} in this session.`;
-          } else {
-            alertBox.style.display = "none";
-          }
-
-          // 50/10 RULE LOGIC
           cycleCard.style.display = "flex";
           let elapsedMins = elap * 60;
           let cycleMin = elapsedMins % 60;
@@ -680,35 +785,29 @@
             cStatus.innerText = "☕ Brain Break";
             cDesc.innerText =
               "Step away from the screen. Stretch, drink water, relax eyes.";
-
             let breakRemainMins = 60 - cycleMin;
-            let breakRemainSecs = Math.floor(
-              (breakRemainMins - Math.floor(breakRemainMins)) * 60,
-            );
             cTimer.innerText = `${Math.floor(breakRemainMins).toString().padStart(2, "0")}:${(59 - now.getSeconds()).toString().padStart(2, "0")}`;
-
-            let breakProgress = ((cycleMin - 50) / 10) * 100;
-            cProg.style.width = `${breakProgress}%`;
+            cProg.style.width = `${((cycleMin - 50) / 10) * 100}%`;
           } else {
             cycleCard.classList.remove("break-mode");
             cStatus.innerText = "🧠 Deep Focus";
             cDesc.innerText = "No distractions. Phone away. Full immersion.";
-
             let focusRemainMins = 50 - cycleMin;
             cTimer.innerText = `${Math.floor(focusRemainMins).toString().padStart(2, "0")}:${(59 - now.getSeconds()).toString().padStart(2, "0")}`;
-
-            let focusProgress = (cycleMin / 50) * 100;
-            cProg.style.width = `${focusProgress}%`;
+            cProg.style.width = `${(cycleMin / 50) * 100}%`;
           }
         }
 
-        // Render Timeline (update only on minute change)
+        // Render main Timeline
         if (now.getMinutes() !== lastMin) {
           const tl = document.getElementById("timeline-container");
           tl.innerHTML = "";
           sched.forEach((t) => {
+            // Check if active (handle midnight wrap for UI highlight)
             let act =
-              !isNamaz && currDec >= t.start && currDec < t.end ? "active" : "";
+              !isNamaz && effectiveDec >= t.start && effectiveDec < t.end
+                ? "active"
+                : "";
             tl.innerHTML += `
             <div class="tl-item ${act}">
               <div class="tl-time">${formatTime(t.start)}</div>
@@ -723,7 +822,7 @@
         }
       }
 
-      // Settings
+      // Settings Listeners
       document.getElementById("save-btn").addEventListener("click", (e) => {
         prayers.forEach((p) =>
           localStorage.setItem(
@@ -733,18 +832,42 @@
         );
         lastMin = -1;
         runEngine();
-        let btn = e.target;
-        btn.innerText = "Saved Successfully!";
-        setTimeout(() => (btn.innerText = "Save Configurations"), 2000);
+        e.target.innerText = "Saved Successfully!";
+        setTimeout(() => (e.target.innerText = "Save Configurations"), 2000);
       });
 
-      // Urge Surfing
+      // Shift System Listeners
+      document
+        .getElementById("apply-shift-btn")
+        .addEventListener("click", (e) => {
+          const val = document.getElementById("time-wakeup").value;
+          if (val) {
+            scheduleOffset = Math.max(0, timeToDecimal(val) - 6);
+            localStorage.setItem("wake-time", val);
+            localStorage.setItem("wake-date", new Date().toDateString());
+            lastMin = -1;
+            runEngine();
+            e.target.innerText = "Shift Applied!";
+            setTimeout(() => (e.target.innerText = "Apply Shift"), 2000);
+          }
+        });
+
+      document
+        .getElementById("reset-shift-btn")
+        .addEventListener("click", () => {
+          scheduleOffset = 0;
+          document.getElementById("time-wakeup").value = "";
+          localStorage.removeItem("wake-time");
+          lastMin = -1;
+          runEngine();
+        });
+
+      // Panic Button Logic
       let panicTimerInterval;
       document.getElementById("panic-btn").addEventListener("click", () => {
         const panel = document.getElementById("panic-display");
         const btn = document.getElementById("panic-btn");
         const countdown = document.getElementById("panic-countdown");
-
         if (panel.style.display === "flex") return;
         btn.style.display = "none";
         panel.style.display = "flex";
@@ -756,7 +879,6 @@
             .padStart(2, "0");
           let s = (sec % 60).toString().padStart(2, "0");
           countdown.innerText = `${m}:${s}`;
-
           if (sec <= 0) {
             clearInterval(panicTimerInterval);
             panel.style.display = "none";
@@ -773,7 +895,7 @@
       });
 
       runEngine();
-      setInterval(runEngine, 1000); // 1-second interval for real-time 50/10 timer // fixed
+      setInterval(runEngine, 1000);
     </script>
   </body>
 </html>
