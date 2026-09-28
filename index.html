@@ -6,40 +6,32 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
-    <title>Cloud Focus Domain</title>
+    <title>Snappy Focus Engine</title>
 
-    <!-- Modern Typography matching the theme -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
       rel="stylesheet"
     />
     <link
       href="https://fonts.googleapis.com/icon?family=Material+Icons+Round"
       rel="stylesheet"
     />
-
-    <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json" />
-    <meta name="theme-color" content="#3b82f6" />
 
     <style>
-      /* CLOUD UNIVERSE THEME VARIABLES */
+      /* ZERO-LATENCY MINIMAL THEME - NO FLUFFY ANIMATIONS */
       :root {
-        --text-dark: #111827;
-        --text-muted: #6b7280;
-        --accent-blue: #3b82f6;
-        --accent-soft-blue: #eff6ff;
-        --accent-pink: #fdf2f8;
-        --pure-black: #0f1115;
+        --text-dark: #0f172a;
+        --text-muted: #64748b;
+        --accent-blue: #2563eb;
+        --accent-break: #f59e0b;
+        --accent-namaz: #8b5cf6;
+        --accent-panic: #e11d48;
         --pure-white: #ffffff;
-
-        --glass-bg: rgba(255, 255, 255, 0.65);
-        --glass-border: rgba(255, 255, 255, 0.8);
-        --glass-shadow:
-          0 20px 40px rgba(0, 0, 0, 0.04),
-          inset 0 1px 0 rgba(255, 255, 255, 0.6);
+        --bg-color: #f8fafc;
+        --border-color: #e2e8f0;
 
         --font-main: "Plus Jakarta Sans", sans-serif;
       }
@@ -51,39 +43,14 @@
       }
 
       body {
-        /* Soft, dreamy sky gradient mimicking the image background */
-        background-color: #fdfdfd;
-        background-image:
-          radial-gradient(
-            at 10% 0%,
-            hsla(205, 65%, 88%, 1) 0px,
-            transparent 50%
-          ),
-          radial-gradient(
-            at 90% 10%,
-            hsla(340, 50%, 93%, 1) 0px,
-            transparent 50%
-          ),
-          radial-gradient(
-            at 50% 50%,
-            hsla(210, 100%, 97%, 1) 0px,
-            transparent 50%
-          ),
-          radial-gradient(
-            at 20% 90%,
-            hsla(190, 60%, 90%, 1) 0px,
-            transparent 50%
-          );
-        background-attachment: fixed;
+        background-color: var(--bg-color);
         color: var(--text-dark);
         font-family: var(--font-main);
-        line-height: 1.6;
+        line-height: 1.5;
         padding: 1.5rem 1rem;
         min-height: 100vh;
         display: flex;
         justify-content: center;
-        letter-spacing: -0.01em;
-        overflow-x: hidden;
       }
 
       .app-container {
@@ -91,371 +58,161 @@
         width: 100%;
         display: grid;
         grid-template-columns: 1fr 380px;
-        gap: 24px;
-        z-index: 10;
+        gap: 20px;
         align-items: start;
       }
 
-      /* MOBILE RESPONSIVE MEDIA QUERIES */
       @media (max-width: 950px) {
         .app-container {
           grid-template-columns: 1fr;
-          gap: 16px;
-        }
-
-        body {
-          padding: 1rem 0.5rem;
-        }
-
-        .heading-xl {
-          font-size: 2.2rem !important;
-        }
-        .cycle-time {
-          font-size: 3.5rem !important;
-        }
-        .cloud-card {
-          padding: 24px !important;
-          border-radius: 20px !important;
-        }
-
-        .app-bar {
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 12px;
-          margin-bottom: 16px !important;
-        }
-        .badge-group {
-          flex-wrap: wrap;
         }
       }
 
-      /* APP BAR */
+      /* SOLID FAST CARDS - No Glass, No Blur, No Transitions */
+      .solid-card {
+        background: var(--pure-white);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 24px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      }
+
       .app-bar {
         grid-column: 1 / -1;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 8px;
-        padding: 0 10px;
+        margin-bottom: 10px;
       }
-
       .app-title {
-        font-size: 1.25rem;
-        font-weight: 700;
-        color: var(--text-dark);
+        font-size: 1.4rem;
+        font-weight: 800;
         display: flex;
         align-items: center;
         gap: 8px;
-        letter-spacing: -0.03em;
       }
-
-      .badge-group {
-        display: flex;
-        gap: 10px;
-      }
-
       .badge {
-        background: rgba(255, 255, 255, 0.8);
-        backdrop-filter: blur(10px);
-        color: var(--text-dark);
-        padding: 6px 14px;
-        border-radius: 30px;
+        background: #f1f5f9;
+        padding: 6px 12px;
+        border-radius: 6px;
         font-size: 0.85rem;
-        font-weight: 600;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        border: 1px solid rgba(255, 255, 255, 1);
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
-      }
-      .badge.highlight {
-        color: var(--accent-blue);
-        background: var(--accent-soft-blue);
-        border-color: rgba(59, 130, 246, 0.1);
+        font-weight: 700;
+        border: 1px solid #cbd5e1;
       }
 
-      /* CLOUD CARDS (Glassmorphism) */
-      .cloud-card {
-        background: var(--glass-bg);
-        backdrop-filter: blur(24px);
-        -webkit-backdrop-filter: blur(24px);
-        border-radius: 28px;
-        border: 1px solid var(--glass-border);
-        box-shadow: var(--glass-shadow);
-        padding: 32px;
-        display: flex;
-        flex-direction: column;
-        position: relative;
-        overflow: hidden;
-      }
-
-      /* Subtle white glare inside card */
-      .cloud-card::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 50%;
-        background: linear-gradient(
-          to bottom,
-          rgba(255, 255, 255, 0.4) 0%,
-          transparent 100%
-        );
-        pointer-events: none;
-        border-radius: inherit;
-      }
-
-      /* TYPOGRAPHY */
       .label-sm {
         font-size: 0.8rem;
-        font-weight: 700;
+        font-weight: 800;
         text-transform: uppercase;
-        letter-spacing: 1.5px;
         color: var(--text-muted);
-        margin-bottom: 12px;
-      }
-      .heading-xl {
-        font-size: 2.8rem;
-        font-weight: 700;
-        color: var(--text-dark);
-        line-height: 1.1;
-        letter-spacing: -0.03em;
         margin-bottom: 8px;
       }
-      .text-reg {
-        font-size: 1rem;
-        color: var(--text-muted);
-        font-weight: 500;
+      .heading-xl {
+        font-size: 2.5rem;
+        font-weight: 800;
+        line-height: 1.1;
+        margin-bottom: 8px;
       }
 
-      /* PROGRESS BARS */
+      /* INSTANT PROGRESS BARS */
       .prog-track {
-        background: rgba(0, 0, 0, 0.05);
-        height: 12px;
-        border-radius: 20px;
+        background: #f1f5f9;
+        height: 16px;
+        border-radius: 8px;
         overflow: hidden;
-        margin: 20px 0 10px;
-        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
+        margin: 12px 0;
       }
+      /* REMOVED TRANSITION FOR INSTANT FEEL */
       .prog-fill {
         background: var(--text-dark);
         height: 100%;
         width: 0%;
-        border-radius: 20px;
-        transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-      .prog-stats {
-        display: flex;
-        justify-content: space-between;
-        font-size: 0.85rem;
-        font-weight: 600;
-        color: var(--text-muted);
+        border-radius: 8px;
       }
 
-      /* MICRO-CYCLE (50/10) */
       .cycle-box {
         margin-top: 24px;
         padding-top: 24px;
-        border-top: 1px solid rgba(0, 0, 0, 0.05);
+        border-top: 1px solid var(--border-color);
       }
       .cycle-time {
-        font-size: 4.5rem;
+        font-size: 4rem;
         font-weight: 800;
-        color: var(--text-dark);
-        letter-spacing: -0.05em;
         line-height: 1;
-        margin-bottom: 5px;
-      }
-      .cycle-status {
-        font-size: 1.25rem;
-        font-weight: 700;
-        color: var(--accent-blue);
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-      .cycle-box.break .cycle-status {
-        color: #f59e0b;
-      }
-      .cycle-box.break .prog-fill {
-        background: #f59e0b;
+        margin-bottom: 8px;
       }
 
-      /* ITINERARY LIST */
       .list-container {
-        margin-top: 16px;
+        margin-top: 12px;
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        gap: 8px;
       }
       .list-item {
         display: flex;
         justify-content: space-between;
-        align-items: center;
-        padding: 14px 18px;
-        border-radius: 16px;
-        background: rgba(255, 255, 255, 0.5);
-        border: 1px solid rgba(255, 255, 255, 0.8);
-        font-size: 0.95rem;
+        padding: 12px;
+        border-radius: 8px;
+        background: #f8fafc;
+        border: 1px solid var(--border-color);
         font-weight: 600;
-        color: var(--text-muted);
-        transition: all 0.3s ease;
+        font-size: 0.9rem;
       }
       .list-item.active {
-        background: var(--pure-white);
-        color: var(--text-dark);
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
-      }
-      .list-item.break {
-        border-left: 4px solid #f59e0b;
-      }
-      .list-item.namaz {
-        border-left: 4px solid #8b5cf6;
-      }
-
-      @media (max-width: 500px) {
-        .list-item {
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 4px;
-          padding: 12px 14px;
-        }
-      }
-
-      /* TIMELINE */
-      .timeline {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        max-height: 400px;
-        overflow-y: auto;
-        padding-right: 10px;
-        margin-top: 16px;
-      }
-      .timeline::-webkit-scrollbar {
-        width: 6px;
-      }
-      .timeline::-webkit-scrollbar-thumb {
-        background: rgba(0, 0, 0, 0.1);
-        border-radius: 10px;
-      }
-
-      .tl-row {
-        display: flex;
-        gap: 16px;
-        padding: 12px;
-        border-radius: 16px;
-        transition: all 0.2s;
-        opacity: 0.6;
-      }
-      .tl-row.active {
-        opacity: 1;
-        background: var(--pure-white);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-      }
-      .tl-time {
-        width: 75px;
-        font-size: 0.85rem;
-        font-weight: 700;
+        background: #eff6ff;
+        border-color: var(--accent-blue);
         color: var(--accent-blue);
-        flex-shrink: 0;
-      }
-      .tl-task {
-        font-size: 0.95rem;
-        font-weight: 600;
-        color: var(--text-dark);
       }
 
-      /* BUTTONS & INPUTS */
-      .btn-black {
-        background: var(--pure-black);
+      /* BUTTONS & INPUTS - Sharp & Snappy */
+      .btn {
+        background: var(--text-dark);
         color: var(--pure-white);
         border: none;
-        padding: 14px 24px;
-        border-radius: 14px;
+        padding: 12px 20px;
+        border-radius: 8px;
+        font-weight: 700;
         font-family: var(--font-main);
-        font-weight: 600;
-        font-size: 0.95rem;
         cursor: pointer;
         width: 100%;
-        transition:
-          transform 0.2s,
-          box-shadow 0.2s;
         display: flex;
         justify-content: center;
         align-items: center;
         gap: 8px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       }
-      .btn-black:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-      }
-
-      .btn-ghost {
-        background: transparent;
-        color: var(--text-muted);
-        box-shadow: none;
-        border: 1px solid rgba(0, 0, 0, 0.1);
-      }
-      .btn-ghost:hover {
-        background: rgba(0, 0, 0, 0.03);
-        transform: none;
-        box-shadow: none;
-      }
+      .btn:active {
+        background: #000;
+        transform: scale(0.98);
+      } /* Click feedback only */
 
       .input-wrap {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background: var(--pure-white);
-        padding: 10px 16px;
-        border-radius: 14px;
-        margin-bottom: 12px;
-        border: 1px solid rgba(0, 0, 0, 0.05);
-        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.01);
-      }
-      .input-wrap label {
-        font-size: 0.9rem;
-        font-weight: 600;
-        color: var(--text-dark);
+        background: #f8fafc;
+        padding: 10px 12px;
+        border-radius: 8px;
+        margin-bottom: 8px;
+        border: 1px solid var(--border-color);
       }
       .input-wrap input {
         border: none;
         background: transparent;
-        font-family: var(--font-main);
-        font-weight: 600;
-        color: var(--text-dark);
+        font-weight: 700;
         outline: none;
         text-align: right;
-        width: 100px;
+        font-family: var(--font-main);
       }
 
-      /* PANIC STATE */
-      .panic-container {
+      /* SLEEP RESULTS */
+      .sleep-box {
+        background: #eff6ff;
+        border: 1px dashed var(--accent-blue);
+        padding: 12px;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        margin-top: 10px;
         display: none;
-        background: #fff1f2;
-        border: 1px solid #fecdd3;
-        border-radius: 20px;
-        padding: 24px;
-        text-align: center;
-        margin-top: 16px;
-      }
-      .panic-time {
-        font-size: 3.5rem;
-        font-weight: 800;
-        color: #e11d48;
-        line-height: 1;
-        margin-bottom: 10px;
-      }
-
-      /* Icons styling */
-      .material-icons-round {
-        font-size: 20px;
-      }
-      .icon-blue {
-        color: var(--accent-blue);
       }
     </style>
   </head>
@@ -463,124 +220,142 @@
     <div class="app-container">
       <!-- HEADER -->
       <div class="app-bar">
-        <div class="app-title">Clouduniverse</div>
-        <div class="badge-group">
-          <div class="badge highlight" id="shift-badge" style="display: none">
-            <span class="material-icons-round">schedule</span> Time Shifted
-          </div>
+        <div class="app-title">
+          <span class="material-icons-round">bolt</span> Snappy Engine
+        </div>
+        <div style="display: flex; gap: 8px">
+          <!-- NOTIFICATION BRAIN ACTIVATOR -->
+          <button
+            class="btn"
+            id="notify-btn"
+            style="
+              background: #10b981;
+              padding: 6px 12px;
+              width: auto;
+              font-size: 0.8rem;
+            "
+          >
+            <span class="material-icons-round" style="font-size: 16px"
+              >notifications</span
+            >
+            Enable Brain
+          </button>
           <div class="badge" id="day-badge">Loading...</div>
         </div>
       </div>
 
-      <!-- LEFT COLUMN -->
-      <div style="display: flex; flex-direction: column; gap: 24px">
-        <!-- MAIN FOCUS CARD -->
-        <div class="cloud-card">
-          <div class="label-sm">Active Domain Focus</div>
+      <!-- LEFT COLUMN (DOING) -->
+      <div style="display: flex; flex-direction: column; gap: 16px">
+        <div class="solid-card">
+          <div class="label-sm">Active Module</div>
           <div class="heading-xl" id="task-title">Initializing...</div>
-          <div
-            class="text-reg"
-            id="task-time-range"
-            style="display: flex; align-items: center; gap: 6px"
-          >
-            <span class="material-icons-round icon-blue">cloud_queue</span>
-            Session: 00:00 - 00:00
-          </div>
 
           <div class="prog-track">
             <div class="prog-fill" id="task-progress"></div>
           </div>
-          <div class="prog-stats">
-            <span id="task-elapsed">0h 0m active</span>
-            <span id="task-remain">0h 0m remaining</span>
-          </div>
 
-          <!-- 50/10 MICRO CYCLE -->
           <div class="cycle-box" id="cycle-card">
-            <div class="label-sm">Performance Cycle</div>
-            <div class="cycle-time" id="cycle-timer">00:00</div>
-            <div class="cycle-status" id="cycle-status">
-              <span class="material-icons-round">verified</span> Blazing Fast
-              Focus
-            </div>
             <div
-              class="text-reg"
-              id="cycle-desc"
-              style="font-size: 0.9rem; margin-top: 4px"
+              class="label-sm"
+              id="cycle-status"
+              style="color: var(--accent-blue)"
             >
-              Maintain optimal performance. No distractions.
+              Focus Cycle Active
             </div>
-            <div class="prog-track" style="height: 6px; margin-top: 12px">
+            <div class="cycle-time" id="cycle-timer">00:00</div>
+            <div class="prog-track" style="height: 8px">
               <div class="prog-fill" id="cycle-progress"></div>
             </div>
           </div>
 
-          <!-- ITINERARY -->
-          <div id="itinerary-section" style="display: none; margin-top: 24px">
-            <div class="label-sm">Session Milestones</div>
-            <div class="list-container" id="session-itinerary"></div>
+          <div class="label-sm" style="margin-top: 24px">
+            Sequence Milestones
           </div>
+          <div class="list-container" id="session-itinerary"></div>
         </div>
 
-        <!-- URGE SURFING -->
         <button
-          class="btn-black"
+          class="btn"
           id="panic-btn"
           style="
             background: var(--pure-white);
-            color: #e11d48;
-            border: 1px solid #fecdd3;
+            color: var(--accent-panic);
+            border: 2px solid var(--accent-panic);
           "
         >
-          <span class="material-icons-round">security</span> Enable Urge
-          Protection (15m)
+          Urge Protection (15m Lock)
         </button>
-
-        <div class="panic-container" id="panic-display">
-          <span
-            class="material-icons-round"
-            style="font-size: 40px; color: #e11d48; margin-bottom: 8px"
-            >lock_clock</span
+        <div
+          class="solid-card"
+          id="panic-display"
+          style="
+            display: none;
+            text-align: center;
+            border-color: var(--accent-panic);
+          "
+        >
+          <div
+            class="cycle-time"
+            id="panic-countdown"
+            style="color: var(--accent-panic)"
           >
-          <div class="panic-time" id="panic-countdown">15:00</div>
-          <div class="text-reg" style="color: #be123c">
-            Top-Tier Security against distractions active. Breathe.
+            15:00
           </div>
         </div>
       </div>
 
-      <!-- RIGHT COLUMN -->
-      <div style="display: flex; flex-direction: column; gap: 24px">
-        <!-- SCHEDULE ADJUSTMENT -->
-        <div class="cloud-card" style="padding: 24px">
-          <div class="label-sm">Scalable Time Resources</div>
+      <!-- RIGHT COLUMN (THINKING / SETTINGS) -->
+      <div style="display: flex; flex-direction: column; gap: 16px">
+        <!-- THE NEW SLEEP CALCULATOR -->
+        <div class="solid-card">
+          <div class="label-sm" style="color: var(--accent-blue)">
+            Brain Rest Calculator
+          </div>
           <div
-            class="text-reg"
-            style="font-size: 0.85rem; margin-bottom: 16px; line-height: 1.4"
+            style="
+              font-size: 0.85rem;
+              margin-bottom: 12px;
+              color: var(--text-muted);
+            "
           >
-            Easily adjust resources based on wake-up time.
+            Enter bedtime. Assumes 30 mins to fall asleep. Calculates 90-min REM
+            cycles.
           </div>
           <div class="input-wrap">
-            <label>Start Time</label>
-            <input type="time" id="time-wakeup" />
+            <label>Bedtime</label>
+            <input type="time" id="time-bed" />
           </div>
-          <div style="display: flex; gap: 10px">
-            <button class="btn-black" id="apply-shift-btn">Adjust</button>
-            <button class="btn-black btn-ghost" id="reset-shift-btn">
+          <button
+            class="btn"
+            id="calc-sleep-btn"
+            style="background: var(--accent-blue)"
+          >
+            Calculate Wake Time
+          </button>
+          <div class="sleep-box" id="sleep-result"></div>
+        </div>
+
+        <!-- SCHEDULE SHIFT -->
+        <div class="solid-card">
+          <div class="label-sm">Day Shift (Woke Up Late?)</div>
+          <div class="input-wrap">
+            <label>Wake Time</label><input type="time" id="time-wakeup" />
+          </div>
+          <div style="display: flex; gap: 8px">
+            <button class="btn" id="apply-shift-btn">Apply</button>
+            <button
+              class="btn"
+              id="reset-shift-btn"
+              style="background: #e2e8f0; color: #000"
+            >
               Reset
             </button>
           </div>
         </div>
 
-        <!-- TIMELINE -->
-        <div class="cloud-card" style="padding: 24px; flex-grow: 1">
-          <div class="label-sm">Daily Blueprint</div>
-          <div class="timeline" id="timeline-container"></div>
-        </div>
-
-        <!-- SETTINGS -->
-        <div class="cloud-card" style="padding: 24px">
-          <div class="label-sm">Security & Overrides (Prayer)</div>
+        <!-- NAMAZ OVERRIDES -->
+        <div class="solid-card">
+          <div class="label-sm">Absolute Directives (Prayers)</div>
           <div class="input-wrap">
             <label>Fajr</label
             ><input type="time" id="time-fajr" value="05:00" />
@@ -600,14 +375,94 @@
             <label>Isha</label
             ><input type="time" id="time-isha" value="19:45" />
           </div>
-          <button class="btn-black" id="save-btn" style="margin-top: 8px">
-            Save Configurations
+          <button class="btn" id="save-btn" style="margin-top: 8px">
+            Save Times
           </button>
         </div>
       </div>
     </div>
 
     <script>
+      // ------------- THE BRAIN (NOTIFICATION ENGINE) -------------
+      // ------------- THE BRAIN (NOTIFICATION ENGINE) -------------
+      let notificationsEnabled = false;
+      let lastNotificationState = "";
+
+      const notifyBtn = document.getElementById("notify-btn");
+
+      // Step 1: Check immediately on page load
+      if ("Notification" in window) {
+        if (Notification.permission === "granted") {
+          // Agar permission pehle se hai, toh button hamesha ke liye chupa do
+          notificationsEnabled = true;
+          notifyBtn.style.display = "none";
+        }
+      } else {
+        // Agar browser purana hai aur notifications support hi nahi karta
+        notifyBtn.style.display = "none";
+      }
+
+      // Step 2: Handle button click if permission is NOT granted yet
+      notifyBtn.addEventListener("click", () => {
+        if (!("Notification" in window)) {
+          alert("This browser does not support desktop notification");
+        } else if (Notification.permission !== "denied") {
+          Notification.requestPermission().then((permission) => {
+            if (permission === "granted") {
+              notificationsEnabled = true;
+              notifyBtn.style.display = "none"; // Click karne ke baad foran gayab
+              new Notification("Brain Connected!", {
+                body: "You will now get alerts for breaks and focus.",
+              });
+            }
+          });
+        }
+      });
+
+      function sendNotification(title, body) {
+        if (notificationsEnabled && Notification.permission === "granted") {
+          new Notification(title, { body: body, icon: "icon-192.png" });
+        }
+      }
+
+      // ------------- SLEEP CALCULATOR -------------
+      document
+        .getElementById("calc-sleep-btn")
+        .addEventListener("click", () => {
+          const bedTime = document.getElementById("time-bed").value;
+          if (!bedTime) return;
+
+          const [h, m] = bedTime.split(":").map(Number);
+
+          let sleepDate = new Date();
+          sleepDate.setHours(h, m, 0, 0);
+
+          // Add 30 mins sleep latency
+          let actualSleepStart = new Date(sleepDate.getTime() + 30 * 60000);
+
+          // 5 cycles = 7.5 hours (450 mins)
+          let wake5 = new Date(actualSleepStart.getTime() + 450 * 60000);
+          // 6 cycles = 9 hours (540 mins)
+          let wake6 = new Date(actualSleepStart.getTime() + 540 * 60000);
+
+          const formatTime = (d) => {
+            let hh = d.getHours();
+            let mm = d.getMinutes().toString().padStart(2, "0");
+            let ampm = hh >= 12 ? "PM" : "AM";
+            hh = hh % 12 || 12;
+            return `${hh.toString().padStart(2, "0")}:${mm} ${ampm}`;
+          };
+
+          const resBox = document.getElementById("sleep-result");
+          resBox.style.display = "block";
+          resBox.innerHTML = `
+          Deep Sleep starts approx: <b>${formatTime(actualSleepStart)}</b><br><br>
+          Optimal Wake (7.5 Hrs): <b style="color:var(--accent-blue); font-size:1.1rem;">${formatTime(wake5)}</b><br>
+          Max Rest Wake (9 Hrs): <b style="color:var(--text-dark);">${formatTime(wake6)}</b>
+        `;
+        });
+
+      // ------------- ENGINE LOGIC -------------
       const weekdaySchedule = [
         { start: 0, end: 6, task: "Offline (Memory Sync)" },
         { start: 6, end: 7, task: "Boot Up, Exercise, Fuel" },
@@ -617,7 +472,7 @@
         { start: 13, end: 14, task: "Low Power Mode (Lunch & Rest)" },
         { start: 14, end: 17, task: "BBIT: Physical Archives Study" },
         { start: 17, end: 18.5, task: "Nature Walk (Dopamine Reset)" },
-        { start: 18.5, end: 20, task: "Vanilla JS / CSS Dev Environment" },
+        { start: 18.5, end: 20, task: "Vanilla JS / CSS Layouts" },
         { start: 20, end: 21, task: "Dinner Phase" },
         { start: 21, end: 22, task: "Crunchyroll Anime (Reward Stream)" },
         { start: 22, end: 24, task: "Offline (Memory Sync)" },
@@ -630,7 +485,7 @@
         { start: 10, end: 10.5, task: "Analog Break" },
         { start: 10.5, end: 13, task: "Open Source / Problem Solving" },
         { start: 13, end: 14, task: "Low Power Mode" },
-        { start: 14, end: 17, task: "Project Polish / Deploy to Cloud" },
+        { start: 14, end: 17, task: "Project Polish / Deploy" },
         { start: 17, end: 18.5, task: "Nature Walk" },
         { start: 18.5, end: 20, task: "Refactoring Code" },
         { start: 20, end: 21, task: "Dinner Phase" },
@@ -644,7 +499,7 @@
         { start: 7, end: 10, task: "Slow Morning (Idle)" },
         { start: 10, end: 13, task: "Unstructured Hobby" },
         { start: 13, end: 14, task: "Low Power Mode" },
-        { start: 14, end: 17, task: "Social Connection / Ping" },
+        { start: 14, end: 17, task: "Social Connection" },
         { start: 17, end: 18.5, task: "Extended Nature Exposure" },
         { start: 18.5, end: 21, task: "Crunchyroll Binge Session" },
         { start: 21, end: 22, task: "Dinner Phase" },
@@ -674,7 +529,6 @@
         const [h, m] = t.split(":").map(Number);
         return h + m / 60;
       }
-
       function formatTime(dec) {
         let h = Math.floor(dec);
         let m = Math.round((dec - h) * 60);
@@ -685,39 +539,24 @@
         let displayH = h % 24;
         if (displayH === 0 && m === 0) return "12:00 AM";
         let ampm = displayH >= 12 ? "PM" : "AM";
-        let finalH = displayH % 12 || 12;
-        return `${finalH.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")} ${ampm}`;
+        return `${(displayH % 12 || 12).toString().padStart(2, "0")}:${m.toString().padStart(2, "0")} ${ampm}`;
       }
-
-      function formatDur(decHours) {
-        const m = Math.floor(decHours * 60);
-        return m >= 60 ? `${Math.floor(m / 60)}h ${m % 60}m` : `${m}m`;
-      }
-
-      let lastMin = -1;
 
       function runEngine() {
         const now = new Date();
         const day = now.getDay();
         let baseSched = weekdaySchedule;
-        let mode = "Reliable Hosting (Mon-Fri)";
+        let mode = "Mon-Fri (Builder)";
 
         if (day === 0) {
           baseSched = sundaySchedule;
-          mode = "Maintenance Window (Sun)";
+          mode = "Sun (Maintenance)";
         } else if (day === 6) {
           baseSched = saturdaySchedule;
-          mode = "Developer Cloud (Sat)";
+          mode = "Sat (Creator)";
         }
 
         document.getElementById("day-badge").innerText = mode;
-
-        const shiftBadge = document.getElementById("shift-badge");
-        if (scheduleOffset > 0) {
-          shiftBadge.style.display = "flex";
-        } else {
-          shiftBadge.style.display = "none";
-        }
 
         let sched = baseSched.map((t) => ({
           ...t,
@@ -732,9 +571,8 @@
         let nName = "";
 
         sched.forEach((t) => {
-          if (currDec >= t.start && currDec < t.end) {
-            baseTask = t;
-          } else if (currDec + 24 >= t.start && currDec + 24 < t.end) {
+          if (currDec >= t.start && currDec < t.end) baseTask = t;
+          else if (currDec + 24 >= t.start && currDec + 24 < t.end) {
             baseTask = t;
             effectiveDec = currDec + 24;
           }
@@ -749,13 +587,13 @@
         });
 
         const tTitle = document.getElementById("task-title");
-        const tTimeRange = document.getElementById("task-time-range");
         const tProg = document.getElementById("task-progress");
         const cycleCard = document.getElementById("cycle-card");
         const itiContainer = document.getElementById("session-itinerary");
 
+        let currentEngineState = ""; // To track changes for Notifications
+
         if (baseTask) {
-          document.getElementById("itinerary-section").style.display = "block";
           let subEvents = [];
           let t = baseTask.start;
           let blockIdx = 1;
@@ -766,7 +604,7 @@
               type: "focus",
               start: t,
               end: focusEnd,
-              title: `Fast-Track Focus ${blockIdx}`,
+              title: `Focus Block ${blockIdx}`,
             });
             if (focusEnd < baseTask.end) {
               let breakEnd = Math.min(focusEnd + 10 / 60, baseTask.end);
@@ -774,7 +612,7 @@
                 type: "break",
                 start: focusEnd,
                 end: breakEnd,
-                title: `Accessible Break ${blockIdx}`,
+                title: `Recovery Break ${blockIdx}`,
               });
               t = breakEnd;
               blockIdx++;
@@ -787,9 +625,10 @@
             let nTime = timeToDecimal(
               document.getElementById(`time-${p}`).value,
             );
-            let adjustedNTime = nTime;
-            if (nTime < 12 && baseTask.start > 12 && effectiveDec > 24)
-              adjustedNTime += 24;
+            let adjustedNTime =
+              nTime < 12 && baseTask.start > 12 && effectiveDec > 24
+                ? nTime + 24
+                : nTime;
             if (
               adjustedNTime >= baseTask.start &&
               adjustedNTime < baseTask.end
@@ -798,7 +637,7 @@
                 type: "namaz",
                 start: adjustedNTime,
                 end: adjustedNTime + 0.25,
-                title: `Top-Tier Override: ${p.charAt(0).toUpperCase() + p.slice(1)}`,
+                title: `Prayer: ${p}`,
               });
             }
           });
@@ -824,55 +663,36 @@
               isActive = true;
 
             let cStr = "list-item";
-            if (ev.type === "break") cStr += " break";
-            if (ev.type === "namaz") cStr += " namaz";
             if (isActive) cStr += " active";
-
-            let icon = "dns";
-            if (ev.type === "break") icon = "coffee";
-            if (ev.type === "namaz") icon = "lock";
 
             itiContainer.innerHTML += `
               <div class="${cStr}">
-                <div style="display:flex; align-items:center; gap:8px;">
-                  <span class="material-icons-round" style="font-size:16px;">${icon}</span>
-                  ${ev.title}
-                </div>
+                <span>${ev.title.toUpperCase()}</span>
                 <span>${formatTime(ev.start)} - ${formatTime(ev.end)}</span>
               </div>
             `;
           });
-        } else {
-          document.getElementById("itinerary-section").style.display = "none";
         }
 
         if (isNamaz) {
-          tTitle.innerText = `${nName} PRAYER (Secure Override)`;
-          tTitle.style.color = "#8b5cf6";
-          tTimeRange.innerHTML = `<span class="material-icons-round icon-blue">cloud_queue</span> Session: ${formatTime(currDec - (currDec % 0.25))} - ${formatTime(currDec - (currDec % 0.25) + 0.25)}`;
-          let nTime = timeToDecimal(
-            document.getElementById(`time-${nName.toLowerCase()}`).value,
-          );
-          let elap = currDec - nTime;
+          currentEngineState = "NAMAZ";
+          tTitle.innerText = `${nName} PRAYER`;
+          tTitle.style.color = "var(--accent-namaz)";
+          let elap =
+            currDec -
+            timeToDecimal(
+              document.getElementById(`time-${nName.toLowerCase()}`).value,
+            );
           tProg.style.width = `${Math.max(0, Math.min(100, (elap / 0.25) * 100))}%`;
-          tProg.style.background = "#8b5cf6";
-          document.getElementById("task-elapsed").innerText =
-            formatDur(elap) + " active";
-          document.getElementById("task-remain").innerText =
-            formatDur(0.25 - elap) + " remaining";
+          tProg.style.background = "var(--accent-namaz)";
           cycleCard.style.display = "none";
         } else if (baseTask) {
           tTitle.innerText = baseTask.task;
           tTitle.style.color = "var(--text-dark)";
-          tTimeRange.innerHTML = `<span class="material-icons-round icon-blue">cloud_queue</span> Session: ${formatTime(baseTask.start)} - ${formatTime(baseTask.end)}`;
           let dur = baseTask.end - baseTask.start;
           let elap = effectiveDec - baseTask.start;
           tProg.style.width = `${Math.max(0, Math.min(100, (elap / dur) * 100))}%`;
           tProg.style.background = "var(--text-dark)";
-          document.getElementById("task-elapsed").innerText =
-            formatDur(elap) + " active";
-          document.getElementById("task-remain").innerText =
-            formatDur(baseTask.end - effectiveDec) + " remaining";
 
           cycleCard.style.display = "block";
           let elapsedMins = elap * 60;
@@ -881,45 +701,51 @@
 
           const cStatus = document.getElementById("cycle-status");
           const cTimer = document.getElementById("cycle-timer");
-          const cDesc = document.getElementById("cycle-desc");
           const cProg = document.getElementById("cycle-progress");
 
           if (isBreak) {
-            cycleCard.classList.add("break");
-            cStatus.innerHTML = `<span class="material-icons-round">flash_on</span> Scalable Break Resource`;
-            cDesc.innerText =
-              "Experience ultra-fast recovery. Step away from the screen.";
+            currentEngineState = "BREAK";
+            cStatus.innerText = "RECOVERY BREAK ACTIVE";
+            cStatus.style.color = "var(--accent-break)";
+            cTimer.style.color = "var(--accent-break)";
             let breakRemainMins = 60 - cycleMin;
             cTimer.innerText = `${Math.floor(breakRemainMins).toString().padStart(2, "0")}:${(59 - now.getSeconds()).toString().padStart(2, "0")}`;
             cProg.style.width = `${((cycleMin - 50) / 10) * 100}%`;
+            cProg.style.background = "var(--accent-break)";
           } else {
-            cycleCard.classList.remove("break");
-            cStatus.innerHTML = `<span class="material-icons-round">verified</span> Blazing Fast Focus`;
-            cDesc.innerText =
-              "Exceptional performance active. Guard against distractions.";
+            currentEngineState = "FOCUS";
+            cStatus.innerText = "DEEP FOCUS ACTIVE";
+            cStatus.style.color = "var(--accent-blue)";
+            cTimer.style.color = "var(--text-dark)";
             let focusRemainMins = 50 - cycleMin;
             cTimer.innerText = `${Math.floor(focusRemainMins).toString().padStart(2, "0")}:${(59 - now.getSeconds()).toString().padStart(2, "0")}`;
             cProg.style.width = `${(cycleMin / 50) * 100}%`;
+            cProg.style.background = "var(--accent-blue)";
           }
         }
 
-        if (now.getMinutes() !== lastMin) {
-          const tl = document.getElementById("timeline-container");
-          tl.innerHTML = "";
-          sched.forEach((t) => {
-            let act =
-              !isNamaz && effectiveDec >= t.start && effectiveDec < t.end
-                ? "active"
-                : "";
-            tl.innerHTML += `
-            <div class="tl-row ${act}">
-              <div class="tl-time">${formatTime(t.start)}</div>
-              <div class="tl-task">${t.task}</div>
-            </div>
-          `;
-          });
-          lastMin = now.getMinutes();
+        // TRIGGER NOTIFICATIONS IF STATE CHANGES
+        if (
+          lastNotificationState !== "" &&
+          lastNotificationState !== currentEngineState
+        ) {
+          if (currentEngineState === "FOCUS")
+            sendNotification(
+              "🧠 Deep Focus Time",
+              "Get back to work! 50 minutes strictly on the task.",
+            );
+          else if (currentEngineState === "BREAK")
+            sendNotification(
+              "☕ Break Time!",
+              "Step away from the screen for 10 minutes. Relax your eyes.",
+            );
+          else if (currentEngineState === "NAMAZ")
+            sendNotification(
+              "🕌 Prayer Time",
+              "Time for Namaz. Pause your tasks.",
+            );
         }
+        lastNotificationState = currentEngineState;
       }
 
       document.getElementById("save-btn").addEventListener("click", (e) => {
@@ -929,10 +755,9 @@
             document.getElementById(`time-${p}`).value,
           ),
         );
-        lastMin = -1;
         runEngine();
         e.target.innerText = "Saved";
-        setTimeout(() => (e.target.innerText = "Save Configurations"), 2000);
+        setTimeout(() => (e.target.innerText = "Save Times"), 2000);
       });
 
       document
@@ -943,10 +768,9 @@
             scheduleOffset = Math.max(0, timeToDecimal(val) - 6);
             localStorage.setItem("wake-time", val);
             localStorage.setItem("wake-date", new Date().toDateString());
-            lastMin = -1;
             runEngine();
-            e.target.innerText = "Adjusted";
-            setTimeout(() => (e.target.innerText = "Adjust"), 2000);
+            e.target.innerText = "Applied";
+            setTimeout(() => (e.target.innerText = "Apply"), 2000);
           }
         });
 
@@ -956,20 +780,18 @@
           scheduleOffset = 0;
           document.getElementById("time-wakeup").value = "";
           localStorage.removeItem("wake-time");
-          lastMin = -1;
           runEngine();
         });
 
+      // PANIC BUTTON
       let panicTimerInterval;
       document.getElementById("panic-btn").addEventListener("click", () => {
         const panel = document.getElementById("panic-display");
         const btn = document.getElementById("panic-btn");
         const countdown = document.getElementById("panic-countdown");
-        if (panel.style.display === "flex") return;
+        if (panel.style.display === "block") return;
         btn.style.display = "none";
-        panel.style.display = "flex";
-        panel.style.flexDirection = "column";
-
+        panel.style.display = "block";
         let sec = 15 * 60;
         panicTimerInterval = setInterval(() => {
           let m = Math.floor(sec / 60)
@@ -980,14 +802,14 @@
           if (sec <= 0) {
             clearInterval(panicTimerInterval);
             panel.style.display = "none";
-            btn.style.display = "flex";
-            btn.innerHTML = `<span class="material-icons-round">verified</span> Security Restored`;
-            btn.style.color = "#059669";
-            btn.style.borderColor = "#a7f3d0";
+            btn.style.display = "block";
+            btn.innerHTML = `Protection Over`;
+            btn.style.color = "#10b981";
+            btn.style.borderColor = "#10b981";
             setTimeout(() => {
-              btn.innerHTML = `<span class="material-icons-round">security</span> Enable Urge Protection (15m)`;
-              btn.style.color = "#e11d48";
-              btn.style.borderColor = "#fecdd3";
+              btn.innerHTML = `Urge Protection (15m Lock)`;
+              btn.style.color = "var(--accent-panic)";
+              btn.style.borderColor = "var(--accent-panic)";
             }, 3000);
           }
           sec--;
@@ -995,17 +817,7 @@
       });
 
       runEngine();
-      setInterval(runEngine, 1000);
-    </script>
-    <script>
-      if ("serviceWorker" in navigator) {
-        window.addEventListener("load", function () {
-          navigator.serviceWorker
-            .register("sw.js")
-            .then((res) => console.log("Service worker registered!"))
-            .catch((err) => console.log("Service worker failed", err));
-        });
-      }
+      setInterval(runEngine, 1000); // 1 SEC INTERVAL - SHARP
     </script>
   </body>
 </html>
